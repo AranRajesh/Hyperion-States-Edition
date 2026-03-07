@@ -101,13 +101,9 @@ void poseDisplayTask(void*) {
     while (true) {
         lemlib::Pose pose = chassis.getPose(); // x, y in inches, theta in degrees (by default)
 
+        controller.print(0, 0, "X:%.2f Y:%.2f T:%.2f", pose.x, pose.y, pose.theta);
 
-        pros::lcd::print(0, "X: %.2f", pose.x);
-        pros::lcd::print(1, "Y: %.2f", pose.y);
-        pros::lcd::print(2, "Theta: %.2f", pose.theta);
-
-
-        pros::delay(50); // 20 Hz update
+        pros::delay(100); // 20 Hz update
     }
 }
 
@@ -115,7 +111,7 @@ void poseDisplayTask(void*) {
 void firstMatchloader(){
     chassis.setPose(0,0,0);
     matchLoader.set_value(true);
-    chassis.moveToPoint(-0.3, 30.5, 3000, {}, true); //go to second matchloader async
+    chassis.moveToPoint(-1.5, 30.5, 3000, {}, true); //go to second matchloader async
     while (chassis.isInMotion() && !g_cancel) pros::delay(10);
     CHECK_CANCEL();
     intakeMotor.move(127);
